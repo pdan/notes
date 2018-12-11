@@ -35,7 +35,7 @@ func (h *Handler) SignUp(c echo.Context) (err error) {
 	// Save user
 	db := h.MDB.Clone()
 	defer db.Close()
-	if err = db.DB("teacher").C("users").Insert(u); err != nil {
+	if err = db.DB("notes").C("users").Insert(u); err != nil {
 		return
 	}
 
@@ -54,7 +54,7 @@ func (h *Handler) SignIn(c echo.Context) (err error) {
 	// Find user
 	db := h.MDB.Clone()
 	defer db.Close()
-	if err = db.DB("teacher").C("users").Find(bson.M{"email": u.Email}).One(&u); err != nil {
+	if err = db.DB("notes").C("users").Find(bson.M{"email": u.Email}).One(&u); err != nil {
 		if err == mgo.ErrNotFound {
 			return &echo.HTTPError{Code: http.StatusUnauthorized, Message: "Invalid email or password"}
 		}
