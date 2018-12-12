@@ -1,6 +1,9 @@
 package main
 
 import (
+	"html/template"
+	"io"
+
 	"git.labs.daneshvar.studio/daneshvar/notes/handler"
 	"git.labs.daneshvar.studio/daneshvar/notes/model"
 	"github.com/labstack/echo"
@@ -14,8 +17,16 @@ type CustomValidator struct {
 	validator *validator.Validator
 }
 
+type Template struct {
+	templates *template.Template
+}
+
 func (cv *CustomValidator) Validate(i interface{}) error {
 	return cv.validator.Validate(i)
+}
+
+func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
+	return t.templates.ExecuteTemplate(w, name, data)
 }
 
 func initDB() *mgo.Session {
@@ -47,14 +58,22 @@ func main() {
 		MDB: mdb, // Mongo Database
 	}
 
+	t := &Template{
+		templates: template.Must(template.ParseGlob("interface/build/*.html")),
+	}
+
 	e := echo.New()
 
 	e.Logger.SetLevel(log.ERROR)
 	e.Validator = &CustomValidator{validator: validator.NewValidator()}
+	e.Renderer = t
 
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+
+	// Template Renders
+	e.GET("/", h.ReactApplication)
 
 	// Serve public directory
 	e.Static("/static", "public")

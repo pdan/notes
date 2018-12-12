@@ -1,0 +1,39 @@
+$global-text-direction: rtl;
+$body-font-family: IRS,
+-apple-system,
+BlinkMacSystemFont;
+$header-font-family: $body-font-family;
+
+$header-styles: (
+  small: (
+    'h1': ('font-size': 24),
+    'h2': ('font-size': 20),
+    'h3': ('font-size': 19),
+    'h4': ('font-size': 18),
+    'h5': ('font-size': 17),
+    'h6': ('font-size': 16),
+  ),
+  medium: (
+    'h1': ('font-size': 48),
+    'h2': ('font-size': 40),
+    'h3': ('font-size': 31),
+    'h4': ('font-size': 25),
+    'h5': ('font-size': 20),
+    'h6': ('font-size': 16),
+  ),
+);
+
+$foundation-palette: (primary: #1779ba,
+  secondary: #767676,
+  success: #5cb85c,
+  warning: #ffae00,
+  alert: #d9534f,
+);
+
+$global-radius: 3px;
+
+button {
+  color: #ffffff !important;
+  height: 40px;
+  padding: 0 1em !important;
+}

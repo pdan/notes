@@ -1,0 +1,15 @@
+body {
+    background-color: lighten(#B1BCD2, 15%);
+}
+
+.header {
+    height: 30px;
+    margin-bottom: 20px;
+}
+
+.portlet {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 5px 50px -12px rgba(0,0,0,0.2);
+    padding: 20px;
+}
