@@ -76,7 +76,7 @@ func main() {
 	e.GET("/", h.ReactApplication)
 
 	// Serve public directory
-	e.Static("/static", "public")
+	e.Static("/static", "interface/build/static")
 
 	// User Sign routes
 	e.POST("/api/user/signup", h.SignUp)

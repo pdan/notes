@@ -12,5 +12,5 @@ type Handler struct {
 }
 
 func (h *Handler) ReactApplication(c echo.Context) error {
-	return c.Render(http.StatusOK, "", "")
+	return c.Render(http.StatusOK, "index.html", "")
 }

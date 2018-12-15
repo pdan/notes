@@ -1,0 +1,17 @@
+version: '3'
+services:
+  notes:
+    build: .
+    ports:
+      - 1313:1313
+    networks:
+      - poseidon
+
+  mongodb:
+    image: mongo
+    container_name: "mongodb"
+    networks:
+      - poseidon
+
+networks:
+  poseidon:
