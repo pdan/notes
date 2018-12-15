@@ -1,6 +1,14 @@
-before_script:
-   - docker info
+image: docker:stable
 
- build_image:
-   script:
-     - docker-compose up -d
+variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
+
+services:
+    - docker:dind
+before_script:
+    - docker info
+
+build_image:
+    script:
+        - docker-compose up -d
