@@ -6,9 +6,18 @@ variables:
 
 services:
     - docker:dind
-before_script:
-    - docker info
 
-build_image:
+stages:
+    - Build image & Push to Registery
+    
+docker build:
+    stage: Build image & Push to Registery
+    only:
+        - master
     script:
-        - docker-compose up -d
+        - docker build -t notes .
+        - echo "$REGISTRY_PASSWORD" | docker login -u "$REGISTRY_USER" --password-stdin https://dk.dane5hvar.com/v2/
+        - docker image ls
+        - docker container ls -a
+        - docker tag notes dk.dane5hvar.com/v2/notes
+        - docker push dk.dane5hvar.com/v2/notes
