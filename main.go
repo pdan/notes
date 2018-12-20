@@ -72,9 +72,6 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	// Template Renders
-	e.GET("/", h.ReactApplication)
-
 	// Serve public directory
 	e.Static("/static", "interface/build/static")
 
@@ -99,6 +96,9 @@ func main() {
 	api.GET("/note", h.GetNote)
 	api.GET("/note/list", h.GetNotesList)
 	api.DELETE("/note", h.DeleteNote)
+
+	// Template Renders
+	e.GET("/*", h.ReactApplication)
 
 	e.Logger.Fatal(e.Start(":1313"))
 }
