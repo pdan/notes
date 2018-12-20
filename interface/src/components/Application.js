@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Root from './Root';
+import Signin from './Signin';
 // import SecuredRoute from './SecuredRoute';
 
 const App = ({ store }) => (
@@ -15,7 +16,8 @@ const App = ({ store }) => (
           <Route path="/user/signin" component={Signin} />
           <Route path="/user/signup" component={Signup} /> */}
 
-          <Route path="/" component={Root} />
+          <Route path="/notes" component={Root} />
+          <Route path="/user/signin" component={Signin} />
       </div>
     </Router>
   </Provider>
