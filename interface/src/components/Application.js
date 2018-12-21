@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 import Root from './Root';
 import Signin from './Signin';
-// import SecuredRoute from './SecuredRoute';
+import SecuredRoute from './SecuredRoute';
 
 const App = ({ store }) => (
   <Provider store={store}>
@@ -15,8 +15,8 @@ const App = ({ store }) => (
           <SecuredRoute path="/project/:id" component={Project} />
           <Route path="/user/signin" component={Signin} />
           <Route path="/user/signup" component={Signup} /> */}
-
-          <Route path="/notes" component={Root} />
+          {/* <Redirect from="/" to="/notes" /> */}
+          <SecuredRoute exact={true} path="/" component={Root} />
           <Route path="/user/signin" component={Signin} />
       </div>
     </Router>

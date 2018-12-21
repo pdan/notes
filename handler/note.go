@@ -72,7 +72,7 @@ func (h *Handler) GetNotesList(c echo.Context) (err error) {
 
 	uid := bson.ObjectIdHex(utility.GetTokenClaim("userID", c).(string))
 	// log.Println([1]bson.ObjectId{uid}[0])
-	h.MDB.DB("notes").C("notes").Find(bson.M{"user": uid}).Sort("-$natural").All(&notes)
+	h.MDB.DB("notes").C("notes").Find(bson.M{"user": uid}).Sort("$natural").All(&notes)
 	return c.JSON(http.StatusOK, notes)
 }
 

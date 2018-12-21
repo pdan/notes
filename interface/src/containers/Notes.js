@@ -18,7 +18,7 @@ class Notes extends Component {
 
   componentDidMount() {
     this.props.fetchNotesList('')
-    
+
   }
 
   async addNote(e) {
@@ -26,46 +26,45 @@ class Notes extends Component {
     if (!this.state.content) {
       return
     }
-    
-      try {
-        const response = await fetch(`/api/note`, {
-          method: 'put',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({content: this.state.content})
-        });
-        this.setState({content: ''})
-        this.props.fetchNotesList('')
-        
-      } catch (error) {
-        console.log(error)
-      }
+
+    try {
+      const response = await fetch('/api/note', {
+        method: 'put',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: this.state.content })
+      });
+      this.setState({ content: '' })
+      this.props.fetchNotesList('')
+
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   notesList() {
-    
+
     if (this.props.notesList === undefined) {
       return
     }
-    
+
     return this.props.notesList.map((data, i) => {
       return <div key={i}>{i + ' - '+data.content}</div>
     })
   }
 
   render() {
-      return (
-          <div className="notes">
-            <form className="add-note">
+    return (
+      <div className="notes">
+          <div className="list">
+              {this.notesList()}
+            </div>
+            <form className="add-note" onSubmit={this.addNote}>
               <label>
                 What books did you read over summer break?
                 <textarea placeholder="Write down here" rows="3" value={this.state.content} onChange={e => this.setState({content: e.target.value})}></textarea>
-                <button type="submit" className="button primary" onClick={this.addNote}>Submit</button>
+                <button type="submit" className="button primary">Submit</button>
               </label>
             </form>
-          
-            <div className="list">
-              {this.notesList()}
-            </div>
           </div>
     );
   }
@@ -80,4 +79,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Notes);
-
