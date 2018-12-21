@@ -46,9 +46,9 @@ class Notes extends Component {
     if (this.props.notesList === undefined) {
       return
     }
-
+    setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 100)
     return this.props.notesList.map((data, i) => {
-      return <div key={i}>{i + ' - '+data.content}</div>
+      return <div className="note-item" key={i}>{data.content}</div>
     })
   }
 
@@ -60,7 +60,6 @@ class Notes extends Component {
             </div>
             <form className="add-note" onSubmit={this.addNote}>
               <label>
-                What books did you read over summer break?
                 <textarea placeholder="Write down here" rows="3" value={this.state.content} onChange={e => this.setState({content: e.target.value})}></textarea>
                 <button type="submit" className="button primary">Submit</button>
               </label>

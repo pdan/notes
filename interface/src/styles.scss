@@ -24,3 +24,16 @@ body {
     background: rgba(0,0,0,0.8);
     color: #fff;
 }
+
+.note-item {
+    border-bottom: 1px solid #ebebeb;
+    padding: 10px 0px;
+
+    &:last-child {
+        border: 0px;
+    }
+}
+
+.add-note {
+    margin-top: 20px;
+}
