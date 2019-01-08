@@ -25,6 +25,12 @@ func (h *Handler) AddNote(c echo.Context) (err error) {
 	n.Created = time.Now().UnixNano()
 	n.Updated = time.Now().UnixNano()
 
+	for i, _ := range n.Categories {
+		n.Categories[i].ID = bson.NewObjectId()
+	}
+
+	// h.SyncCategories(n.User)
+
 	// Save user
 	db := h.MDB.Clone()
 	defer db.Close()
@@ -78,4 +84,13 @@ func (h *Handler) GetNotesList(c echo.Context) (err error) {
 
 func (h *Handler) DeleteNote(c echo.Context) (err error) {
 	return c.NoContent(http.StatusOK)
+}
+
+func (h *Handler) SyncCategories(id bson.ObjectId) (err error) {
+	u := &model.User{}
+	db := h.MDB.Clone()
+	defer db.Close()
+	db.DB("notes").C("users").Find(bson.M{"_id": id}).All(u)
+	// log.Println(u)
+	return nil
 }

@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { fetchNotesList } from '../actions/index';
+import Category from './Category'
 
 class Notes extends Component {
 
@@ -10,10 +11,12 @@ class Notes extends Component {
     super(props)
 
     this.state = {
-      content: ''
+      content: '',
+      categories: []
     }
 
     this.addNote = this.addNote.bind(this)
+    this.onCategoriesChange = this.onCategoriesChange.bind(this)
   }
 
   componentDidMount() {
@@ -31,7 +34,7 @@ class Notes extends Component {
       const response = await fetch('/api/note', {
         method: 'put',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content: this.state.content })
+        body: JSON.stringify({ content: this.state.content, categories: this.state.categories })
       });
       this.setState({ content: '' })
       this.props.fetchNotesList('')
@@ -52,19 +55,26 @@ class Notes extends Component {
     })
   }
 
+  onCategoriesChange(categories) {
+    this.setState({categories})
+    console.log(categories)
+  }
+
   render() {
     return (
       <div className="notes">
-          <div className="list">
-              {this.notesList()}
-            </div>
-            <form className="add-note" onSubmit={this.addNote}>
-              <label>
-                <textarea placeholder="Write down here" rows="3" value={this.state.content} onChange={e => this.setState({content: e.target.value})}></textarea>
-                <button type="submit" className="button primary">Submit</button>
-              </label>
-            </form>
-          </div>
+        <div className="list">
+          {this.notesList()}
+        </div>
+        <form className="add-note" onSubmit={this.addNote}>
+          <label>
+            <Category onCategoriesChange={this.onCategoriesChange}/>
+            <textarea placeholder="Write down here" rows="3" value={this.state.content} onChange={e => this.setState({content: e.target.value})}></textarea>
+            <button type="submit" className="button primary">Submit</button>
+          </label>
+        </form>
+      </div>
+          
     );
   }
 }
