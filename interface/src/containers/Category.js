@@ -1,47 +1,73 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import CreatableSelect from 'react-select/lib/Creatable';
 
 import { fetchCategories } from '../actions/index';
-
-const colourOptions = [
-  { value: 'ocean', label: 'Ocean' },
-  { value: 'blue', label: 'Blue', color: '#0052CC', disabled: true },
-  { value: 'purple', label: 'Purple', color: '#5243AA' },
-  { value: 'red', label: 'Red', color: '#FF5630', isFixed: true },
-  { value: 'orange', label: 'Orange', color: '#FF8B00' },
-  { value: 'yellow', label: 'Yellow', color: '#FFC400' },
-  { value: 'green', label: 'Green', color: '#36B37E' },
-  { value: 'forest', label: 'Forest', color: '#00875A' },
-  { value: 'slate', label: 'Slate', color: '#253858' },
-  { value: 'silver', label: 'Silver', color: '#666666' },
-];
 
 class Category extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-    //   content: ''
+      //   content: ''
+      categories: [],
+      newCategory: '',
+      selected: []
     }
 
+    this.items = this.items.bind(this)
+    this.addItem = this.addItem.bind(this)
+
   }
-  
-  handleChange = (newValue, actionMeta) => {
-    // console.group('Value Changed');
-    // console.log(newValue);
-    // console.log(`action: ${actionMeta.action}`);
-    // console.groupEnd();
-    this.props.onCategoriesChange(newValue)
+
+  handleChange = (e) => {
+    var options = e.target.options;
+    var selected = [];
+    for (var i = 0, l = options.length; i < l; i++) {
+      if (options[i].selected) {
+        selected.push({value: options[i].value});
+      }
+    }
+
+    this.props.onCategoriesChange(selected)
   };
+
+  items() {
+    try {
+      return this.state.categories.map((v, i) => {
+        return <option key={i} value={v.value}>{v.value}</option>
+      })
+    } catch (error) {
+      return
+    }
+  }
+
+  addItem() {
+    this.setState({
+      categories: [...this.state.categories, { value: this.state.newCategory }]
+    })
+
+    this.state.newCategory = '';
+  }
+
   render() {
     return (
-      <CreatableSelect
-        isMulti
-        onChange={this.handleChange}
-        options={colourOptions}
-      />
+      <div className="categories">
+        <fieldset className="fieldset">
+          <legend>Categories</legend>
+          <div className="input-group">
+            <span className="input-group-label"><i className="fas fa-tags"></i></span>
+            <input className="input-group-field" name="catergory" type="text" value={this.state.newCategory} onChange={e => this.setState({newCategory: e.target.value})}/>
+            <div className="input-group-button">
+              <input type="button" className="button secondary" name="addButton" value="+" onClick={this.addItem}/>
+            </div>
+          </div>
+
+          <select multiple onChange={this.handleChange} name="categories" >
+            {this.items()}
+          </select>
+        </fieldset>
+      </div>
     );
   }
 }

@@ -28,9 +28,14 @@ body {
 .note-item {
     border-bottom: 1px solid #ebebeb;
     padding: 10px 0px;
+    white-space: pre-line;
 
     &:last-child {
         border: 0px;
+    }
+
+    .label {
+        margin: 0px 3px;
     }
 }
 

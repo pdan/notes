@@ -4799,9 +4799,12 @@ body {
 
 .note-item {
   border-bottom: 1px solid #ebebeb;
-  padding: 10px 0px; }
+  padding: 10px 0px;
+  white-space: pre-line; }
   .note-item:last-child {
     border: 0px; }
+  .note-item .label {
+    margin: 0px 3px; }
 
 .add-note {
   margin-top: 20px; }

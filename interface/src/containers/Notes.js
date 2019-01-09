@@ -51,13 +51,23 @@ class Notes extends Component {
     }
     setTimeout(() => window.scrollTo(0, document.body.scrollHeight), 100)
     return this.props.notesList.map((data, i) => {
-      return <div className="note-item" key={i}>{data.content}</div>
+      return <div className="note-item" key={i}>{data.content} {this.splitCatrgories(data.categories)}</div>
     })
   }
 
+  splitCatrgories(items) {
+    try {
+      return items.map((data, i) => {
+        return <span class="label secondary">{data.value}</span>
+      })
+    } catch (err) {
+      return ''
+    }
+  }
+
   onCategoriesChange(categories) {
-    this.setState({categories})
-    console.log(categories)
+    this.setState({ categories })
+    setTimeout(() => { console.log(this.state.categories) }, 2000)
   }
 
   render() {
@@ -69,12 +79,12 @@ class Notes extends Component {
         <form className="add-note" onSubmit={this.addNote}>
           <label>
             <Category onCategoriesChange={this.onCategoriesChange}/>
-            <textarea placeholder="Write down here" rows="3" value={this.state.content} onChange={e => this.setState({content: e.target.value})}></textarea>
+            <textarea name="content" placeholder="Write down here" rows="3" value={this.state.content} onChange={e => this.setState({content: e.target.value})}></textarea>
             <button type="submit" className="button primary">Submit</button>
           </label>
         </form>
       </div>
-          
+
     );
   }
 }
